@@ -1,1157 +1,1159 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-	<title>一张图看懂“海龟”的生存现状</title>
-	<meta charset="utf-8">
-	<style type="text/css">
-		body {
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>一张图看懂海龟的生存现状</title>
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-		}
-		.upperBar {
-			font-size: 14px;
-		}
-		.container {
-			width: 580;
-			float: fixed;
-		}
-		h3 {
-			text-align: center;
-
-		}
-	</style>
-</head>
-<body>
-<div id="container">
-<script type="text/javascript" src = "d3.v3.min.js" charset="utf-8"></script>
-<!-- <h1>一图看懂“海归”的生存现状 | 调查</h1>
-<p>编者按：</p>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+      <h1>一张图看懂海龟的生存现状</h1>
+      <p></p>
+      <p>编者按：</p>
  <p>由《知识分子》策划并联合自然出版集团、中科院物理所、科学人、科研圈、科学松鼠会、知社学术圈等新媒体发起的《青年科研人员职业发展现状调查》，在为期一个月的时间里，我们收到了2531份“青椒”（高校青年教师）和“青稞”（青年科研人员）的问卷，其中有效问卷2228份，有效回收率达88%。调查对象研究领域几乎涵盖所有学科，问卷来自包括港澳台在内的几乎全部省级行政区。</p>
  <p>在我们的调查中，有895份问卷来自有海外经历的归国青年科研人员，他们曾在中国大陆以外的国家或地区攻读学位、做博士后或有半年以上的海外访学经历，其中95.2%的人最后学历是博士。那么，这部分高学历“海归”的生活和科研状况又如何呢？</p>
 <p></p>
 <p>策划 | 知识分子</p>
 <p>制图 | 镝次元</p>
-<p></p> -->
+
+      </header>
+      <section>
+      <div id="container">
+<script type="text/javascript" src = "d3.v3.min.js" charset="utf-8"></script>
+
+
+<p></p>
 <h3>归国原因：仅有9人认为国内待遇好</h3>
+<p></p>
 <div id="reason"></div>
 <h3>收入情况比非“海龟”略好</h3>
+<p></p>
 <div id="compare1"></div>
 <div id="compare2"></div>
 <h3>住房情况比“非海龟”略好</h3>
+<p></p>
 <div id="reside"></div>
 <h3>每周工作时间长于非“海龟”略好</h3>
+<p></p>
 <div id="workhour"></div>
 <h3>青年教师及青年科学家工作时间对比</h3>
+<p></p>
 <div id="hourcompare"></div>
 <h3>科研经费来源对比</h3>
+<p></p>
 <div id="incomecompare"></div>
 <script type="text/javascript">
 
-	//prepare data
-	var width = 580;
-	var barWidth = 300;
-	var reasonHeight = 300;
-	var dataSet = [49.94, 49.61, 30.64, 25.03, 6.29, 4.83, 1.01];
-	var textSet = ["按规定回家:",
-					"与家人团聚:",
-					"国内发展机会多:",
-					"报效祖国:",
-					"国外生活不适应:",
-					"其他:",
-					"国内待遇收入好:"
-					];
-	//prepare svg
-	var svg = d3.select("#reason")
-					.append("svg")
-					.attr("width", width)
-					.attr("height", reasonHeight)
-	//draw outerRect
-	var outerRect = svg.append("g")
-						.selectAll("rect")
-						.data(dataSet)
-						.enter()
-						.append("rect")
-						.attr("rx", 9)
-						.attr("ry", 9)
-						.attr("x", 160)
-						.attr("y", function(d,i){
-							return i*40+20;
-						})
-						.attr("width", barWidth)
-						.attr("height", 20)
-						.style("stroke", "rgb(100,168,152)")
-						.style("stroke-width", 1.5)
-						.style("fill", "white")
+  //prepare data
+  var width = 580;
+  var barWidth = 300;
+  var reasonHeight = 300;
+  var dataSet = [49.94, 49.61, 30.64, 25.03, 6.29, 4.83, 1.01];
+  var textSet = ["按规定回家:",
+          "与家人团聚:",
+          "国内发展机会多:",
+          "报效祖国:",
+          "国外生活不适应:",
+          "其他:",
+          "国内待遇收入好:"
+          ];
+  //prepare svg
+  var svg = d3.select("#reason")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", reasonHeight)
+  //draw outerRect
+  var outerRect = svg.append("g")
+            .selectAll("rect")
+            .data(dataSet)
+            .enter()
+            .append("rect")
+            .attr("rx", 9)
+            .attr("ry", 9)
+            .attr("x", 160)
+            .attr("y", function(d,i){
+              return i*40+20;
+            })
+            .attr("width", barWidth)
+            .attr("height", 20)
+            .style("stroke", "rgb(100,168,152)")
+            .style("stroke-width", 1.5)
+            .style("fill", "white")
 
-	var innerRect = svg.append("g")
-						.selectAll("rect")
-						.data(dataSet)
-						.enter()
-						.append("rect")
-						.attr("rx", 9)
-						.attr("ry", 9)
-						.attr("x", 160)
-						.attr("y", function(d,i){
-							return i*40+20;
-						})
-						.attr("height", 20)
-						.attr("width", 0)
-						.style("stroke", "rgb(100,168,152)")
-						.style("stroke-width", 1.5)
-						.style("fill", "rgb(100,168,152)")
-						.transition()
-						.duration(2000)
-						.attr("width", function(d,i){
-							return d/100*barWidth;
-						})
-						
-	var upperBar = svg.append("g")
-						.selectAll("text")
-						.data(dataSet)
-						.enter()
-						.append("text")
-						.attr("class","upperBar")
-						.attr("x", 160)
-						.attr("y", function(d,i){
-							return i*40+15;
-						})
-						.text(function(d,i){
-							return textSet[i]
-						});
+  var innerRect = svg.append("g")
+            .selectAll("rect")
+            .data(dataSet)
+            .enter()
+            .append("rect")
+            .attr("rx", 9)
+            .attr("ry", 9)
+            .attr("x", 160)
+            .attr("y", function(d,i){
+              return i*40+20;
+            })
+            .attr("height", 20)
+            .attr("width", 0)
+            .style("stroke", "rgb(100,168,152)")
+            .style("stroke-width", 1.5)
+            .style("fill", "rgb(100,168,152)")
+            .transition()
+            .duration(2000)
+            .attr("width", function(d,i){
+              return d/100*barWidth;
+            })
+            
+  var upperBar = svg.append("g")
+            .selectAll("text")
+            .data(dataSet)
+            .enter()
+            .append("text")
+            .attr("class","upperBar")
+            .attr("x", 160)
+            .attr("y", function(d,i){
+              return i*40+15;
+            })
+            .text(function(d,i){
+              return textSet[i]
+            });
 
-	var upperBar = svg.append("g")
-						.selectAll("text")
-						.data(dataSet)
-						.enter()
-						.append("text")
-						.attr("class","leftBar")
-						.attr("x", 100)
-						.attr("y", function(d,i){
-							return i*40+37;
-						})
-						.text(function(d,i){
-							return d + "%"
-						})
-
-
-</script>
-<script type="text/javascript">
-	//prepare data
-	var width = 580;
-	var barWidth = 300;
-	var compare1Height = 260;
-	var dataSet = [5.59, 31.96, 26.93, 22.01, 7.04, 6.48,];
-	var textSet = ["3000-5000:",
-					"5001-8000:",
-					"8001-10000:",
-					"10001-15000:",
-					"15001-20000:",
-					"20000以上:",
-					];
-	//prepare svg
-	var svg = d3.select("#compare1")
-					.append("svg")
-					.attr("width", width)
-					.attr("height", compare1Height)
-	//draw outerRect
-	var outerRect = svg.append("g")
-						.selectAll("rect")
-						.data(dataSet)
-						.enter()
-						.append("rect")
-						.attr("rx", 9)
-						.attr("ry", 9)
-						.attr("x", 160)
-						.attr("y", function(d,i){
-							return i*40+20;
-						})
-						.attr("width", barWidth)
-						.attr("height", 20)
-						.style("stroke", "rgb(100,168,152)")
-						.style("stroke-width", 1.5)
-						.style("fill", "white")
-
-	var innerRect = svg.append("g")
-						.selectAll("rect")
-						.data(dataSet)
-						.enter()
-						.append("rect")
-						.attr("rx", 9)
-						.attr("ry", 9)
-						.attr("x", 160)
-						.attr("y", function(d,i){
-							return i*40+20;
-						})
-						.attr("height", 20)
-						.attr("width", 0)
-						.style("stroke", "rgb(100,168,152)")
-						.style("stroke-width", 1.5)
-						.style("fill", "rgb(100,168,152)")
-						.transition()
-						.duration(2000)
-						.attr("width", function(d,i){
-							return d/100*barWidth;
-						})
-						
-	var upperBar = svg.append("g")
-						.selectAll("text")
-						.data(dataSet)
-						.enter()
-						.append("text")
-						.attr("class","upperBar")
-						.attr("x", 160)
-						.attr("y", function(d,i){
-							return i*40+15;
-						})
-						.text(function(d,i){
-							return textSet[i]
-						});
-
-	var upperBar = svg.append("g")
-						.selectAll("text")
-						.data(dataSet)
-						.enter()
-						.append("text")
-						.attr("class","leftBar")
-						.attr("x", 100)
-						.attr("y", function(d,i){
-							return i*40+37;
-						})
-						.text(function(d,i){
-							return d + "%"
-						})
+  var upperBar = svg.append("g")
+            .selectAll("text")
+            .data(dataSet)
+            .enter()
+            .append("text")
+            .attr("class","leftBar")
+            .attr("x", 100)
+            .attr("y", function(d,i){
+              return i*40+37;
+            })
+            .text(function(d,i){
+              return d + "%"
+            })
 
 
 </script>
 <script type="text/javascript">
-	//prepare data
-	var width = 580;
-	var height = 300;
-	var dataHG = [12.18, 44.25, 37.43, 6.15];
-	var dataFHG = [6.38, 40.81, 44.19, 8.63];
-	var innerR = 50;
-	var outerR = 80;
-	var color = ["rgb(145, 185, 215)", "rgb(100, 165, 145)", "rgb(135, 135, 135)", "rgb(215, 165, 160)", ];
-	var legend = [	"还不错，生活宽裕",
-						"除维持基本生活，还有结余",
-						"仅够维持基本的生活开销",
-						"太低，生活比较困难"];
-	var position = [[100,40],[350,40],[100,70],[350,70]];
+  //prepare data
+  var width = 580;
+  var barWidth = 300;
+  var compare1Height = 260;
+  var dataSet = [5.59, 31.96, 26.93, 22.01, 7.04, 6.48,];
+  var textSet = ["3000-5000:",
+          "5001-8000:",
+          "8001-10000:",
+          "10001-15000:",
+          "15001-20000:",
+          "20000以上:",
+          ];
+  //prepare svg
+  var svg = d3.select("#compare1")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", compare1Height)
+  //draw outerRect
+  var outerRect = svg.append("g")
+            .selectAll("rect")
+            .data(dataSet)
+            .enter()
+            .append("rect")
+            .attr("rx", 9)
+            .attr("ry", 9)
+            .attr("x", 160)
+            .attr("y", function(d,i){
+              return i*40+20;
+            })
+            .attr("width", barWidth)
+            .attr("height", 20)
+            .style("stroke", "rgb(100,168,152)")
+            .style("stroke-width", 1.5)
+            .style("fill", "white")
 
-	//prepare svg
-	var svg = d3.select("#compare2")
-				.append("svg")
-				.attr("width", width)
-				.attr("height", height);
+  var innerRect = svg.append("g")
+            .selectAll("rect")
+            .data(dataSet)
+            .enter()
+            .append("rect")
+            .attr("rx", 9)
+            .attr("ry", 9)
+            .attr("x", 160)
+            .attr("y", function(d,i){
+              return i*40+20;
+            })
+            .attr("height", 20)
+            .attr("width", 0)
+            .style("stroke", "rgb(100,168,152)")
+            .style("stroke-width", 1.5)
+            .style("fill", "rgb(100,168,152)")
+            .transition()
+            .duration(2000)
+            .attr("width", function(d,i){
+              return d/100*barWidth;
+            })
+            
+  var upperBar = svg.append("g")
+            .selectAll("text")
+            .data(dataSet)
+            .enter()
+            .append("text")
+            .attr("class","upperBar")
+            .attr("x", 160)
+            .attr("y", function(d,i){
+              return i*40+15;
+            })
+            .text(function(d,i){
+              return textSet[i]
+            });
 
-	//prepare pie
-	var pie = d3.layout.pie()
-	 					.sort(null);
-	var leftPieData = pie(dataHG);
-	var rightPieData = pie(dataFHG);
-	var arc = d3.svg.arc()
-					.innerRadius(innerR)
-					.outerRadius(outerR);
-	var arc2 = d3.svg.arc()
-					.innerRadius(innerR*0.0001)
-					.outerRadius(outerR*0.0001);
-	//draw left pie
-	var leftPie = svg.append("g")
-					.selectAll("path")
-					.data(leftPieData)
-					.enter()
-					.append("path")
-					.attr("transform", "translate(150, 200)")
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-					.attr("d", function(d,i){
-						return arc2(d);
-					})
-					.transition()
-					.duration(1000)
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					
+  var upperBar = svg.append("g")
+            .selectAll("text")
+            .data(dataSet)
+            .enter()
+            .append("text")
+            .attr("class","leftBar")
+            .attr("x", 100)
+            .attr("y", function(d,i){
+              return i*40+37;
+            })
+            .text(function(d,i){
+              return d + "%"
+            })
+
+
+</script>
+<script type="text/javascript">
+  //prepare data
+  var width = 580;
+  var height = 300;
+  var dataHG = [12.18, 44.25, 37.43, 6.15];
+  var dataFHG = [6.38, 40.81, 44.19, 8.63];
+  var innerR = 50;
+  var outerR = 80;
+  var color = ["rgb(145, 185, 215)", "rgb(100, 165, 145)", "rgb(135, 135, 135)", "rgb(215, 165, 160)", ];
+  var legend = [  "还不错，生活宽裕",
+            "除维持基本生活，还有结余",
+            "仅够维持基本的生活开销",
+            "太低，生活比较困难"];
+  var position = [[100,40],[350,40],[100,70],[350,70]];
+
+  //prepare svg
+  var svg = d3.select("#compare2")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+  //prepare pie
+  var pie = d3.layout.pie()
+            .sort(null);
+  var leftPieData = pie(dataHG);
+  var rightPieData = pie(dataFHG);
+  var arc = d3.svg.arc()
+          .innerRadius(innerR)
+          .outerRadius(outerR);
+  var arc2 = d3.svg.arc()
+          .innerRadius(innerR*0.0001)
+          .outerRadius(outerR*0.0001);
+  //draw left pie
+  var leftPie = svg.append("g")
+          .selectAll("path")
+          .data(leftPieData)
+          .enter()
+          .append("path")
+          .attr("transform", "translate(150, 200)")
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+          .attr("d", function(d,i){
+            return arc2(d);
+          })
+          .transition()
+          .duration(1000)
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          
 
 //draw right pie
-	var rightPie = svg.append("g")
-					.selectAll("path")
-					.data(rightPieData)
-					.enter()
-					.append("path")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(450, 200)")
-					.attr("fill", function(d,i){
-						return color[i];
-					})
+  var rightPie = svg.append("g")
+          .selectAll("path")
+          .data(rightPieData)
+          .enter()
+          .append("path")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(450, 200)")
+          .attr("fill", function(d,i){
+            return color[i];
+          })
 //draw text 
-	var drawTextLine = svg.append("g")
-						.selectAll("line")
-						.data(rightPieData)
-						.enter()
-						.append("line")
-						.attr("transform", "translate(450, 200)")
-						.attr("x1", function(d){
-							return arc.centroid(d)[0];
-						})
-						.attr("y1",function(d){
-							return arc.centroid(d)[1];
-						})
-						.attr("x2", function(d){
-							return arc.centroid(d)[0]*1.5;
-						})
-						.attr("y2",function(d){
-							return arc.centroid(d)[1]*1.5;
-						})
-						.attr("stroke",function(d,i){
-							return color[i]
-						})
+  var drawTextLine = svg.append("g")
+            .selectAll("line")
+            .data(rightPieData)
+            .enter()
+            .append("line")
+            .attr("transform", "translate(450, 200)")
+            .attr("x1", function(d){
+              return arc.centroid(d)[0];
+            })
+            .attr("y1",function(d){
+              return arc.centroid(d)[1];
+            })
+            .attr("x2", function(d){
+              return arc.centroid(d)[0]*1.5;
+            })
+            .attr("y2",function(d){
+              return arc.centroid(d)[1]*1.5;
+            })
+            .attr("stroke",function(d,i){
+              return color[i]
+            })
 
 var drawText = svg.append("g")
-						.selectAll("text")
-						.data(rightPieData)
-						.enter()
-						.append("text")
-						.attr("transform", "translate(450, 200)")
-						.attr("x", function(d){
-							return arc.centroid(d)[0]*1.5;
-						})
-						.attr("y",function(d){
-							return arc.centroid(d)[1]*1.5;
-						})
-						.attr("fill",function(d,i){
-							return color[i]
-						})
-						.attr("text-anchor",function(d,i){
-							if(d.endAngle <= 3.14){
-								return "start"
-							}else if(d.endAngle > 3.14){
-								return "end"
-							}
-						})
-						.text(function(d,i){
-							return dataFHG[i]+"%"
-						})
+            .selectAll("text")
+            .data(rightPieData)
+            .enter()
+            .append("text")
+            .attr("transform", "translate(450, 200)")
+            .attr("x", function(d){
+              return arc.centroid(d)[0]*1.5;
+            })
+            .attr("y",function(d){
+              return arc.centroid(d)[1]*1.5;
+            })
+            .attr("fill",function(d,i){
+              return color[i]
+            })
+            .attr("text-anchor",function(d,i){
+              if(d.endAngle <= 3.14){
+                return "start"
+              }else if(d.endAngle > 3.14){
+                return "end"
+              }
+            })
+            .text(function(d,i){
+              return dataFHG[i]+"%"
+            })
 
 var drawTextLine2 = svg.append("g")
-						.selectAll("line")
-						.data(leftPieData)
-						.enter()
-						.append("line")
-						.attr("transform", "translate(150, 200)")
-						.attr("x1", function(d){
-							return arc.centroid(d)[0];
-						})
-						.attr("y1",function(d){
-							return arc.centroid(d)[1];
-						})
-						.attr("x2", function(d){
-							return arc.centroid(d)[0];
-						})
-						.attr("y2",function(d){
-							return arc.centroid(d)[1];
-						})
-						.attr("fill", "white")
-						.transition()
-						.delay(800)
-						.attr("x1", function(d){
-							return arc.centroid(d)[0];
-						})
-						.attr("y1",function(d){
-							return arc.centroid(d)[1];
-						})
-						.attr("x2", function(d){
-							return arc.centroid(d)[0]*1.5;
-						})
-						.attr("y2",function(d){
-							return arc.centroid(d)[1]*1.5;
-						})
-						.attr("stroke",function(d,i){
-							return color[i]
-						})
+            .selectAll("line")
+            .data(leftPieData)
+            .enter()
+            .append("line")
+            .attr("transform", "translate(150, 200)")
+            .attr("x1", function(d){
+              return arc.centroid(d)[0];
+            })
+            .attr("y1",function(d){
+              return arc.centroid(d)[1];
+            })
+            .attr("x2", function(d){
+              return arc.centroid(d)[0];
+            })
+            .attr("y2",function(d){
+              return arc.centroid(d)[1];
+            })
+            .attr("fill", "white")
+            .transition()
+            .delay(800)
+            .attr("x1", function(d){
+              return arc.centroid(d)[0];
+            })
+            .attr("y1",function(d){
+              return arc.centroid(d)[1];
+            })
+            .attr("x2", function(d){
+              return arc.centroid(d)[0]*1.5;
+            })
+            .attr("y2",function(d){
+              return arc.centroid(d)[1]*1.5;
+            })
+            .attr("stroke",function(d,i){
+              return color[i]
+            })
 
 var drawText2 = svg.append("g")
-						.selectAll("text")
-						.data(leftPieData)
-						.enter()
-						.append("text")
-						.attr("transform", "translate(150, 200)")
-						.attr("x", function(d){
-							return arc.centroid(d)[0]*1.5;
-						})
-						.attr("y",function(d){
-							return arc.centroid(d)[1]*1.5;
-						})
-						.attr("fill",function(d,i){
-							return color[i]
-						})
-						.attr("text-anchor",function(d,i){
-							if(d.endAngle <= 5){
-								return "start"
-							}else if(d.endAngle > 5){
-								return "end"
-							}
-						})
-						.transition()
-						.delay(1000)
-						.text(function(d,i){
-							return dataHG[i]+"%"
-						})
+            .selectAll("text")
+            .data(leftPieData)
+            .enter()
+            .append("text")
+            .attr("transform", "translate(150, 200)")
+            .attr("x", function(d){
+              return arc.centroid(d)[0]*1.5;
+            })
+            .attr("y",function(d){
+              return arc.centroid(d)[1]*1.5;
+            })
+            .attr("fill",function(d,i){
+              return color[i]
+            })
+            .attr("text-anchor",function(d,i){
+              if(d.endAngle <= 5){
+                return "start"
+              }else if(d.endAngle > 5){
+                return "end"
+              }
+            })
+            .transition()
+            .delay(1000)
+            .text(function(d,i){
+              return dataHG[i]+"%"
+            })
 // draw text
-/*	var drawText = svg.append("g")
-					.selectAll("text")
-					.data(leftPieData)
-					.enter()
-					.append("text")
-					.attr("transform",function(d){
-       					 return "translate(" + arc.centroid(d) + ")";
-   						 })
-					.text(function(d, i){
-						return dataHG[i] +"%";
-					})*/
+/*  var drawText = svg.append("g")
+          .selectAll("text")
+          .data(leftPieData)
+          .enter()
+          .append("text")
+          .attr("transform",function(d){
+                 return "translate(" + arc.centroid(d) + ")";
+               })
+          .text(function(d, i){
+            return dataHG[i] +"%";
+          })*/
 
 // draw legend
-	var legendCircle = svg.append("g")
-					.selectAll("circle")
-					.data(position)
-					.enter()
-					.append("circle")
-					.attr("r", 8)
-					.attr("cx", function(d,i){
-						return d[0]
-					})
-					.attr("cy", function(d,i){
-						return d[1]
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-	var legendText = svg.append("g")
-					.selectAll("text")
-					.data(position)
-					.enter()
-					.append("text")
-					.attr("x", function(d,i){
-						return d[0]+10;
-					})
-					.attr("y", function(d,i){
-						return d[1]+5;
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-					.text(function(d,i){
-						return legend[i];
-					})
-	//draw left HG
-	var leftText = svg.append("g")
-					.selectAll("text")
-					.data(leftPieData)
-					.enter()
-					.append("text")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(150, 200)")
-					.text("海龟")
-					.attr("text-anchor","middle")
-					.attr("font-size","20px")
+  var legendCircle = svg.append("g")
+          .selectAll("circle")
+          .data(position)
+          .enter()
+          .append("circle")
+          .attr("r", 8)
+          .attr("cx", function(d,i){
+            return d[0]
+          })
+          .attr("cy", function(d,i){
+            return d[1]
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+  var legendText = svg.append("g")
+          .selectAll("text")
+          .data(position)
+          .enter()
+          .append("text")
+          .attr("x", function(d,i){
+            return d[0]+10;
+          })
+          .attr("y", function(d,i){
+            return d[1]+5;
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+          .text(function(d,i){
+            return legend[i];
+          })
+  //draw left HG
+  var leftText = svg.append("g")
+          .selectAll("text")
+          .data(leftPieData)
+          .enter()
+          .append("text")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(150, 200)")
+          .text("海龟")
+          .attr("text-anchor","middle")
+          .attr("font-size","20px")
 
-	//draw right HG
-	var leftText = svg.append("g")
-					.selectAll("text")
-					.data(rightPieData)
-					.enter()
-					.append("text")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(450, 200)")
-					.text("非海龟")
-					.attr("text-anchor","middle")
-					.attr("font-size","20px")
+  //draw right HG
+  var leftText = svg.append("g")
+          .selectAll("text")
+          .data(rightPieData)
+          .enter()
+          .append("text")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(450, 200)")
+          .text("非海龟")
+          .attr("text-anchor","middle")
+          .attr("font-size","20px")
 
 
 </script>
 <script type="text/javascript">
-	//prepare data
-	var width = 580;
-	var height = 300;
-	var dataHG = [20.45, 16.2, 47.82, 15.53];
-	var dataFHG = [21.83, 21.31, 43.29, 13.58];
-	var innerR = 50;
-	var outerR = 80;
-	var color = ["rgb(145, 185, 215)", "rgb(100, 165, 145)", "rgb(135, 135, 135)", "rgb(215, 165, 160)", ];
-	var legend = [	"租住私房",
-					"租住公房",
-					"自住房，有房贷",
-					"自住房，无房贷"];
-	var position = [[100,40],[350,40],[100,70],[350,70]];
+  //prepare data
+  var width = 580;
+  var height = 300;
+  var dataHG = [20.45, 16.2, 47.82, 15.53];
+  var dataFHG = [21.83, 21.31, 43.29, 13.58];
+  var innerR = 50;
+  var outerR = 80;
+  var color = ["rgb(145, 185, 215)", "rgb(100, 165, 145)", "rgb(135, 135, 135)", "rgb(215, 165, 160)", ];
+  var legend = [  "租住私房",
+          "租住公房",
+          "自住房，有房贷",
+          "自住房，无房贷"];
+  var position = [[100,40],[350,40],[100,70],[350,70]];
 
-	//prepare svg
-	var svg = d3.select("#reside")
-				.append("svg")
-				.attr("width", width)
-				.attr("height", height);
+  //prepare svg
+  var svg = d3.select("#reside")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-	//prepare pie
-	var pie = d3.layout.pie()
-					 .sort(null);
-	var leftPieData = pie(dataHG);
-	var rightPieData = pie(dataFHG);
-	var arc = d3.svg.arc()
-					.innerRadius(innerR)
-					.outerRadius(outerR);
+  //prepare pie
+  var pie = d3.layout.pie()
+           .sort(null);
+  var leftPieData = pie(dataHG);
+  var rightPieData = pie(dataFHG);
+  var arc = d3.svg.arc()
+          .innerRadius(innerR)
+          .outerRadius(outerR);
 
-	//draw left pie
-	var leftPie = svg.append("g")
-					.selectAll("path")
-					.data(leftPieData)
-					.enter()
-					.append("path")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(150, 200)")
-					.attr("fill", function(d,i){
-						return color[i];
-					})
+  //draw left pie
+  var leftPie = svg.append("g")
+          .selectAll("path")
+          .data(leftPieData)
+          .enter()
+          .append("path")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(150, 200)")
+          .attr("fill", function(d,i){
+            return color[i];
+          })
 
 //draw right pie
-	var rightPie = svg.append("g")
-					.selectAll("path")
-					.data(rightPieData)
-					.enter()
-					.append("path")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(450, 200)")
-					.attr("fill", function(d,i){
-						return color[i];
-					})
+  var rightPie = svg.append("g")
+          .selectAll("path")
+          .data(rightPieData)
+          .enter()
+          .append("path")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(450, 200)")
+          .attr("fill", function(d,i){
+            return color[i];
+          })
 
 // draw text
-/*	var drawText = svg.append("g")
-					.selectAll("text")
-					.data(leftPieData)
-					.enter()
-					.append("text")
-					.attr("transform",function(d){
-       					 return "translate(" + arc.centroid(d) + ")";
-   						 })
-					.text(function(d, i){
-						return dataHG[i] +"%";
-					})*/
+/*  var drawText = svg.append("g")
+          .selectAll("text")
+          .data(leftPieData)
+          .enter()
+          .append("text")
+          .attr("transform",function(d){
+                 return "translate(" + arc.centroid(d) + ")";
+               })
+          .text(function(d, i){
+            return dataHG[i] +"%";
+          })*/
 
 // draw legend
-	var legendCircle = svg.append("g")
-					.selectAll("circle")
-					.data(position)
-					.enter()
-					.append("circle")
-					.attr("r", 8)
-					.attr("cx", function(d,i){
-						return d[0]
-					})
-					.attr("cy", function(d,i){
-						return d[1]
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-	var legendText = svg.append("g")
-					.selectAll("text")
-					.data(position)
-					.enter()
-					.append("text")
-					.attr("x", function(d,i){
-						return d[0]+10;
-					})
-					.attr("y", function(d,i){
-						return d[1]+5;
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-					.text(function(d,i){
-						return legend[i];
-					})
-	//draw left HG
-	var leftText = svg.append("g")
-					.selectAll("text")
-					.data(leftPieData)
-					.enter()
-					.append("text")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(150, 200)")
-					.text("海龟")
-					.attr("text-anchor","middle")
-					.attr("font-size","20px")
+  var legendCircle = svg.append("g")
+          .selectAll("circle")
+          .data(position)
+          .enter()
+          .append("circle")
+          .attr("r", 8)
+          .attr("cx", function(d,i){
+            return d[0]
+          })
+          .attr("cy", function(d,i){
+            return d[1]
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+  var legendText = svg.append("g")
+          .selectAll("text")
+          .data(position)
+          .enter()
+          .append("text")
+          .attr("x", function(d,i){
+            return d[0]+10;
+          })
+          .attr("y", function(d,i){
+            return d[1]+5;
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+          .text(function(d,i){
+            return legend[i];
+          })
+  //draw left HG
+  var leftText = svg.append("g")
+          .selectAll("text")
+          .data(leftPieData)
+          .enter()
+          .append("text")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(150, 200)")
+          .text("海龟")
+          .attr("text-anchor","middle")
+          .attr("font-size","20px")
 
-	//draw right HG
-	var leftText = svg.append("g")
-					.selectAll("text")
-					.data(rightPieData)
-					.enter()
-					.append("text")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(450, 200)")
-					.text("非海龟")
-					.attr("text-anchor","middle")
-					.attr("font-size","20px")
+  //draw right HG
+  var leftText = svg.append("g")
+          .selectAll("text")
+          .data(rightPieData)
+          .enter()
+          .append("text")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(450, 200)")
+          .text("非海龟")
+          .attr("text-anchor","middle")
+          .attr("font-size","20px")
 
 
 </script>
 <script type="text/javascript">
-	//prepare data
-	var width = 580;
-	var height = 300;
-	var dataHG = [9.5, 26.7, 29.5, 34.3];
-	var dataFHG = [15.08, 30.16, 27.68, 27.08];
-	var innerR = 50;
-	var outerR = 80;
-	var color = ["rgb(145, 185, 215)", "rgb(100, 165, 145)", "rgb(135, 135, 135)", "rgb(215, 165, 160)", ];
-	var legend = [	"小于等于40小时",
-					"41-50小时",
-					"51-60小时",
-					"60小时以上"];
-	var position = [[100,40],[350,40],[100,70],[350,70]];
+  //prepare data
+  var width = 580;
+  var height = 300;
+  var dataHG = [9.5, 26.7, 29.5, 34.3];
+  var dataFHG = [15.08, 30.16, 27.68, 27.08];
+  var innerR = 50;
+  var outerR = 80;
+  var color = ["rgb(145, 185, 215)", "rgb(100, 165, 145)", "rgb(135, 135, 135)", "rgb(215, 165, 160)", ];
+  var legend = [  "小于等于40小时",
+          "41-50小时",
+          "51-60小时",
+          "60小时以上"];
+  var position = [[100,40],[350,40],[100,70],[350,70]];
 
-	//prepare svg
-	var svg = d3.select("#workhour")
-				.append("svg")
-				.attr("width", width)
-				.attr("height", height);
+  //prepare svg
+  var svg = d3.select("#workhour")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-	//prepare pie
-	var pie = d3.layout.pie()
-					 .sort(null);
-	var leftPieData = pie(dataHG);
-	var rightPieData = pie(dataFHG);
-	var arc = d3.svg.arc()
-					.innerRadius(innerR)
-					.outerRadius(outerR);
+  //prepare pie
+  var pie = d3.layout.pie()
+           .sort(null);
+  var leftPieData = pie(dataHG);
+  var rightPieData = pie(dataFHG);
+  var arc = d3.svg.arc()
+          .innerRadius(innerR)
+          .outerRadius(outerR);
 
-	//draw left pie
-	var leftPie = svg.append("g")
-					.selectAll("path")
-					.data(leftPieData)
-					.enter()
-					.append("path")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(150, 200)")
-					.attr("fill", function(d,i){
-						return color[i];
-					})
+  //draw left pie
+  var leftPie = svg.append("g")
+          .selectAll("path")
+          .data(leftPieData)
+          .enter()
+          .append("path")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(150, 200)")
+          .attr("fill", function(d,i){
+            return color[i];
+          })
 
 //draw right pie
-	var rightPie = svg.append("g")
-					.selectAll("path")
-					.data(rightPieData)
-					.enter()
-					.append("path")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(450, 200)")
-					.attr("fill", function(d,i){
-						return color[i];
-					})
+  var rightPie = svg.append("g")
+          .selectAll("path")
+          .data(rightPieData)
+          .enter()
+          .append("path")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(450, 200)")
+          .attr("fill", function(d,i){
+            return color[i];
+          })
 
 // draw text
-/*	var drawText = svg.append("g")
-					.selectAll("text")
-					.data(leftPieData)
-					.enter()
-					.append("text")
-					.attr("transform",function(d){
-       					 return "translate(" + arc.centroid(d) + ")";
-   						 })
-					.text(function(d, i){
-						return dataHG[i] +"%";
-					})*/
+/*  var drawText = svg.append("g")
+          .selectAll("text")
+          .data(leftPieData)
+          .enter()
+          .append("text")
+          .attr("transform",function(d){
+                 return "translate(" + arc.centroid(d) + ")";
+               })
+          .text(function(d, i){
+            return dataHG[i] +"%";
+          })*/
 
 // draw legend
-	var legendCircle = svg.append("g")
-					.selectAll("circle")
-					.data(position)
-					.enter()
-					.append("circle")
-					.attr("r", 8)
-					.attr("cx", function(d,i){
-						return d[0]
-					})
-					.attr("cy", function(d,i){
-						return d[1]
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-	var legendText = svg.append("g")
-					.selectAll("text")
-					.data(position)
-					.enter()
-					.append("text")
-					.attr("x", function(d,i){
-						return d[0]+10;
-					})
-					.attr("y", function(d,i){
-						return d[1]+5;
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-					.text(function(d,i){
-						return legend[i];
-					})
-	//draw left HG
-	var leftText = svg.append("g")
-					.selectAll("text")
-					.data(leftPieData)
-					.enter()
-					.append("text")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(150, 200)")
-					.text("海龟")
-					.attr("text-anchor","middle")
-					.attr("font-size","20px")
+  var legendCircle = svg.append("g")
+          .selectAll("circle")
+          .data(position)
+          .enter()
+          .append("circle")
+          .attr("r", 8)
+          .attr("cx", function(d,i){
+            return d[0]
+          })
+          .attr("cy", function(d,i){
+            return d[1]
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+  var legendText = svg.append("g")
+          .selectAll("text")
+          .data(position)
+          .enter()
+          .append("text")
+          .attr("x", function(d,i){
+            return d[0]+10;
+          })
+          .attr("y", function(d,i){
+            return d[1]+5;
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+          .text(function(d,i){
+            return legend[i];
+          })
+  //draw left HG
+  var leftText = svg.append("g")
+          .selectAll("text")
+          .data(leftPieData)
+          .enter()
+          .append("text")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(150, 200)")
+          .text("海龟")
+          .attr("text-anchor","middle")
+          .attr("font-size","20px")
 
-	//draw right HG
-	var leftText = svg.append("g")
-					.selectAll("text")
-					.data(rightPieData)
-					.enter()
-					.append("text")
-					.attr("d", function(d,i){
-						return arc(d);
-					})
-					.attr("transform", "translate(450, 200)")
-					.text("非海龟")
-					.attr("text-anchor","middle")
-					.attr("font-size","20px")
+  //draw right HG
+  var leftText = svg.append("g")
+          .selectAll("text")
+          .data(rightPieData)
+          .enter()
+          .append("text")
+          .attr("d", function(d,i){
+            return arc(d);
+          })
+          .attr("transform", "translate(450, 200)")
+          .text("非海龟")
+          .attr("text-anchor","middle")
+          .attr("font-size","20px")
 
 
 </script>
 <script type="text/javascript">
-	//prepare data
-	var width = 580;
-	var height = 500;
-	var barHeight = 80;
-	var barWidth = 400; 
-	var hourcompare = [	[15.0, 8.9, 15.1, 10.9],
-						[28.5, 26.3, 31.5, 27.6],
-						[26.7, 27.6, 28.5, 34.2],
-						[29.7, 37.1, 24.9, 27.2]
-						];
-	var titleTextData = ["非海龟","海龟","非海龟","海龟"]
-	var titleTextData1 = ["有教学任务","无教学任务"]
-	var legend = [	"小于等于40小时",
-					"41-50小时",
-					"51-60小时",
-					"60小时以上"];
-	var position = [[100,60],[350,60],[100,90],[350,90]];
-	var hourcompareT = d3.transpose(hourcompare);
-	//svg
-	var svg = d3.select("#hourcompare")
-				.append("svg")
-				.attr("width", width)
-				.attr("height", height)
+  //prepare data
+  var width = 580;
+  var height = 500;
+  var barHeight = 80;
+  var barWidth = 400; 
+  var hourcompare = [ [15.0, 8.9, 15.1, 10.9],
+            [28.5, 26.3, 31.5, 27.6],
+            [26.7, 27.6, 28.5, 34.2],
+            [29.7, 37.1, 24.9, 27.2]
+            ];
+  var titleTextData = ["非海龟","海龟","非海龟","海龟"]
+  var titleTextData1 = ["有教学任务","无教学任务"]
+  var legend = [  "小于等于40小时",
+          "41-50小时",
+          "51-60小时",
+          "60小时以上"];
+  var position = [[100,60],[350,60],[100,90],[350,90]];
+  var hourcompareT = d3.transpose(hourcompare);
+  //svg
+  var svg = d3.select("#hourcompare")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
 
-	//
-	var rects = svg.append("g")
-					.selectAll("rect")
-					.data(hourcompareT)
-					.enter()
-					.append("rect")
-					.attr("x", 180)
-					.attr("y", function(d,i){
-						return 180 + i*barHeight})
-					.attr("width", 0)
-					.attr("fill", "white")
-					.transition()
-					.duration(1200)
-					.attr("width", function(d,i){
-						return 4*(d[0]+d[1]+d[2]+d[3]);
-					})
-					.attr("height", 40)
-					.attr("fill", "rgb(215, 165, 160)")
-					
-					;
-	var rects1 = svg.append("g")
-					.selectAll("rect")
-					.data(hourcompareT)
-					.enter()
-					.append("rect")
-					.attr("x", 180)
-					.attr("y", function(d,i){
-						return 180 + i*barHeight})
-					.attr("width", 0)
-					.attr("fill", "white")
-					.transition()
-					.duration(1000)
-					.attr("width", function(d,i){
-						return 4*(d[0]+d[1]+d[2]);
-					})
-					.attr("height", 40)
-					.attr("fill", "rgb(135, 135, 135)");
-	var rects2 = svg.append("g")
-					.selectAll("rect")
-					.data(hourcompareT)
-					.enter()
-					.append("rect")
-					.attr("x", 180)
-					.attr("y", function(d,i){
-						return 180 + i*barHeight})
-					.attr("width", 0)
-					.attr("fill", "white")
-					.transition()
-					.duration(800)
-					.attr("width", function(d,i){
-						return 4*(d[0]+d[1]);
-					})
-					.attr("height", 40)
-					.attr("fill", "rgb(100, 165, 145)");
-	var rects3 = svg.append("g")
-					.selectAll("rect")
-					.data(hourcompareT)
-					.enter()
-					.append("rect")
-					.attr("x", 180)
-					.attr("y", function(d,i){
-						return 180 + i*barHeight})
-					.attr("width", 0)
-					.attr("fill", "white")
-					.transition()
-					.duration(600)
-					.attr("width", function(d,i){
-						return 4*(d[0]);
-					})
-					.attr("height", 40)
-					.attr("fill", "rgb(145, 185, 215)");
+  //
+  var rects = svg.append("g")
+          .selectAll("rect")
+          .data(hourcompareT)
+          .enter()
+          .append("rect")
+          .attr("x", 180)
+          .attr("y", function(d,i){
+            return 180 + i*barHeight})
+          .attr("width", 0)
+          .attr("fill", "white")
+          .transition()
+          .duration(1200)
+          .attr("width", function(d,i){
+            return 4*(d[0]+d[1]+d[2]+d[3]);
+          })
+          .attr("height", 40)
+          .attr("fill", "rgb(215, 165, 160)")
+          
+          ;
+  var rects1 = svg.append("g")
+          .selectAll("rect")
+          .data(hourcompareT)
+          .enter()
+          .append("rect")
+          .attr("x", 180)
+          .attr("y", function(d,i){
+            return 180 + i*barHeight})
+          .attr("width", 0)
+          .attr("fill", "white")
+          .transition()
+          .duration(1000)
+          .attr("width", function(d,i){
+            return 4*(d[0]+d[1]+d[2]);
+          })
+          .attr("height", 40)
+          .attr("fill", "rgb(135, 135, 135)");
+  var rects2 = svg.append("g")
+          .selectAll("rect")
+          .data(hourcompareT)
+          .enter()
+          .append("rect")
+          .attr("x", 180)
+          .attr("y", function(d,i){
+            return 180 + i*barHeight})
+          .attr("width", 0)
+          .attr("fill", "white")
+          .transition()
+          .duration(800)
+          .attr("width", function(d,i){
+            return 4*(d[0]+d[1]);
+          })
+          .attr("height", 40)
+          .attr("fill", "rgb(100, 165, 145)");
+  var rects3 = svg.append("g")
+          .selectAll("rect")
+          .data(hourcompareT)
+          .enter()
+          .append("rect")
+          .attr("x", 180)
+          .attr("y", function(d,i){
+            return 180 + i*barHeight})
+          .attr("width", 0)
+          .attr("fill", "white")
+          .transition()
+          .duration(600)
+          .attr("width", function(d,i){
+            return 4*(d[0]);
+          })
+          .attr("height", 40)
+          .attr("fill", "rgb(145, 185, 215)");
 
 var rectsText = svg.append("g")
-					.selectAll("text")
-					.data(hourcompareT)
-					.enter()
-					.append("text")
-					.attr("x",  function(d,i){
-						return (180+4*(d[0]+d[1]+d[2]+d[3]));
-					})
-					.attr("y", function(d,i){
-						return 180 + i*barHeight})
-					.text(function(d,i){
-						return d[3]+"%"
-					})
-					.attr("text-anchor","end")
-					.attr("dy",25)
-					.attr("fill","white")
-					;
+          .selectAll("text")
+          .data(hourcompareT)
+          .enter()
+          .append("text")
+          .attr("x",  function(d,i){
+            return (180+4*(d[0]+d[1]+d[2]+d[3]));
+          })
+          .attr("y", function(d,i){
+            return 180 + i*barHeight})
+          .text(function(d,i){
+            return d[3]+"%"
+          })
+          .attr("text-anchor","end")
+          .attr("dy",25)
+          .attr("fill","white")
+          ;
 var rectsText1 = svg.append("g")
-					.selectAll("text")
-					.data(hourcompareT)
-					.enter()
-					.append("text")
-					.attr("x",  function(d,i){
-						return (180+4*(d[0]+d[1]+d[2]));
-					})
-					.attr("y", function(d,i){
-						return 180 + i*barHeight})
-					.text(function(d,i){
-						return d[2]+"%"
-					})
-					.attr("text-anchor","end")
-					.attr("dy",25)
-					.attr("fill","white")
-					;
+          .selectAll("text")
+          .data(hourcompareT)
+          .enter()
+          .append("text")
+          .attr("x",  function(d,i){
+            return (180+4*(d[0]+d[1]+d[2]));
+          })
+          .attr("y", function(d,i){
+            return 180 + i*barHeight})
+          .text(function(d,i){
+            return d[2]+"%"
+          })
+          .attr("text-anchor","end")
+          .attr("dy",25)
+          .attr("fill","white")
+          ;
 var rectsText2 = svg.append("g")
-					.selectAll("text")
-					.data(hourcompareT)
-					.enter()
-					.append("text")
-					.attr("x",  function(d,i){
-						return (180+4*(d[0]+d[1]));
-					})
-					.attr("y", function(d,i){
-						return 180 + i*barHeight})
-					.text(function(d,i){
-						return d[1]+"%"
-					})
-					.attr("text-anchor","end")
-					.attr("dy",25)
-					.attr("fill","white")
-					;
+          .selectAll("text")
+          .data(hourcompareT)
+          .enter()
+          .append("text")
+          .attr("x",  function(d,i){
+            return (180+4*(d[0]+d[1]));
+          })
+          .attr("y", function(d,i){
+            return 180 + i*barHeight})
+          .text(function(d,i){
+            return d[1]+"%"
+          })
+          .attr("text-anchor","end")
+          .attr("dy",25)
+          .attr("fill","white")
+          ;
 var rectsText3 = svg.append("g")
-					.selectAll("text")
-					.data(hourcompareT)
-					.enter()
-					.append("text")
-					.attr("x",  function(d,i){
-						return (180+4*(d[0]));
-					})
-					.attr("y", function(d,i){
-						return 180 + i*barHeight})
-					.text(function(d,i){
-						return d[0]+"%"
-					})
-					.attr("text-anchor","end")
-					.attr("dy",25)
-					.attr("fill","white")
-					;
+          .selectAll("text")
+          .data(hourcompareT)
+          .enter()
+          .append("text")
+          .attr("x",  function(d,i){
+            return (180+4*(d[0]));
+          })
+          .attr("y", function(d,i){
+            return 180 + i*barHeight})
+          .text(function(d,i){
+            return d[0]+"%"
+          })
+          .attr("text-anchor","end")
+          .attr("dy",25)
+          .attr("fill","white")
+          ;
 
 
 var titleText = svg.append("g")
-					.selectAll("text")
-					.data(titleTextData)
-					.enter()
-					.append("text")
-					.attr("x", 180)
-					.attr("y", function(d,i){
-						return 170 + i*barHeight})
-					.text(function(d,i){
-						return d
-						})
-					.attr("text-anchor","start")
-					.attr("fill","black")
-					;
+          .selectAll("text")
+          .data(titleTextData)
+          .enter()
+          .append("text")
+          .attr("x", 180)
+          .attr("y", function(d,i){
+            return 170 + i*barHeight})
+          .text(function(d,i){
+            return d
+            })
+          .attr("text-anchor","start")
+          .attr("fill","black")
+          ;
 var titleText1 = svg.append("g")
-					.selectAll("text")
-					.data(titleTextData1)
-					.enter()
-					.append("text")
-					.attr("x", 160)
-					.attr("y", function(d,i){
-						return 240 + i*barHeight*2})
-					.text(function(d,i){
-						return d
-						})
-					.attr("text-anchor","end")
-					.attr("fill","black")
-					.attr("font-size","20px")
-					;
+          .selectAll("text")
+          .data(titleTextData1)
+          .enter()
+          .append("text")
+          .attr("x", 160)
+          .attr("y", function(d,i){
+            return 240 + i*barHeight*2})
+          .text(function(d,i){
+            return d
+            })
+          .attr("text-anchor","end")
+          .attr("fill","black")
+          .attr("font-size","20px")
+          ;
 // draw legend
-	var legendCircle = svg.append("g")
-					.selectAll("circle")
-					.data(position)
-					.enter()
-					.append("circle")
-					.attr("r", 8)
-					.attr("cx", function(d,i){
-						return d[0]
-					})
-					.attr("cy", function(d,i){
-						return d[1]
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-	var legendText = svg.append("g")
-					.selectAll("text")
-					.data(position)
-					.enter()
-					.append("text")
-					.attr("x", function(d,i){
-						return d[0]+10;
-					})
-					.attr("y", function(d,i){
-						return d[1]+5;
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-					.text(function(d,i){
-						return legend[i];
-					})
+  var legendCircle = svg.append("g")
+          .selectAll("circle")
+          .data(position)
+          .enter()
+          .append("circle")
+          .attr("r", 8)
+          .attr("cx", function(d,i){
+            return d[0]
+          })
+          .attr("cy", function(d,i){
+            return d[1]
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+  var legendText = svg.append("g")
+          .selectAll("text")
+          .data(position)
+          .enter()
+          .append("text")
+          .attr("x", function(d,i){
+            return d[0]+10;
+          })
+          .attr("y", function(d,i){
+            return d[1]+5;
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+          .text(function(d,i){
+            return legend[i];
+          })
 </script>
 <script type="text/javascript">
-	//prepare data
-	var width = 580;
-	var height = 680;
-	var dataHG = [86.03, 18.44, 0.45, 5.36, 32.07, 2.23];
-	var dataFHG = [72.02, 16.5, 1.65, 13.28, 39.61, 6.08];
-	var barHeight = 30;
-	var barWidth = 300;
-	var singleChart = 250;
-	var color = ["rgb(215, 165, 160)", "rgb(190, 140, 40)", "rgb(140, 190, 200)", "rgb(100, 170, 160)",  "rgb(80, 130, 130)","rgb(100, 100, 110)",];
-	var position = [[40,20],[240,20],[450,20],[40,50],[240,50],[450,50]];
-	var legend = ["政府科研项目或基金",
-					"企业科研委托或合作",
-					"社会公益组织",
-					"个人募集资金",
-					"单位自主科研经费",
-					"其他"]
+  //prepare data
+  var width = 580;
+  var height = 680;
+  var dataHG = [86.03, 18.44, 0.45, 5.36, 32.07, 2.23];
+  var dataFHG = [72.02, 16.5, 1.65, 13.28, 39.61, 6.08];
+  var barHeight = 30;
+  var barWidth = 300;
+  var singleChart = 250;
+  var color = ["rgb(215, 165, 160)", "rgb(190, 140, 40)", "rgb(140, 190, 200)", "rgb(100, 170, 160)",  "rgb(80, 130, 130)","rgb(100, 100, 110)",];
+  var position = [[40,20],[240,20],[450,20],[40,50],[240,50],[450,50]];
+  var legend = ["政府科研项目或基金",
+          "企业科研委托或合作",
+          "社会公益组织",
+          "个人募集资金",
+          "单位自主科研经费",
+          "其他"]
 
 
-	//prepare svg
-	var svg = d3.select("#incomecompare")
-				.append("svg")
-				.attr("width", width)
-				.attr("height", height);
+  //prepare svg
+  var svg = d3.select("#incomecompare")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-	//draw chart
-	var chartHG = svg.append("g")
-					.selectAll("rect")
-					.data(dataHG)
-					.enter()
-					.append("rect")
-					.attr("x", 230)
-					.attr("y", function(d,i){
-						return 80 + 30 + i*(barHeight+2)
-					})
-					.attr("width",0)
-					.attr("fill", "white")
-					.transition()
-					.duration(1000)
-					.attr("width",function(d,i){
-						return 3*d
-					})
-					.attr("height", barHeight)
-					.attr("fill",function(d,i){
-						return color[i]
-					})
-		var textHG = svg.append("g")
-					.selectAll("text")
-					.data(dataHG)
-					.enter()
-					.append("text")
-					.attr("x", function(d,i){
-						return (230 + 3*d)
-					})
-					.attr("y", function(d,i){
-						return 80 + 30 + i*(barHeight+2)
-					})
-					.attr("fill", "white")
-					.transition()
-					.delay(800)
-					.text(function(d){
-						return d +"%";
-					})
-					.attr("fill",function(d,i){
-						return color[i]
-					})
-					.attr("text-anchor","start")
-					.attr("dy",20)
-					.attr("dx", 5)
-	//draw chart2
-	var chartFHG = svg.append("g")
-					.selectAll("rect")
-					.data(dataFHG)
-					.enter()
-					.append("rect")
-					.attr("x", 230)
-					.attr("y", function(d,i){
-						return 330 + 30 + i*(barHeight+2)
-					})
-					.attr("width",0)
-					.attr("fill", "white")
-					.transition()
-					.duration(1000)
-					.attr("width",function(d,i){
-						return 3*d
-					})
-					.attr("height", barHeight)
-					.attr("fill",function(d,i){
-						return color[i]
-					})
-		var textFHG = svg.append("g")
-					.selectAll("text")
-					.data(dataFHG)
-					.enter()
-					.append("text")
-					.attr("x", function(d,i){
-						return (230 + 3*d)
-					})
-					.attr("y", function(d,i){
-						return 330 + 30 + i*(barHeight+2)
-					})
-					.attr("fill", "white")
-					.transition()
-					.delay(800)
-					.text(function(d){
-						return d +"%";
-					})
-					.attr("fill",function(d,i){
-						return color[i]
-					})
-					.attr("text-anchor","start")
-					.attr("dy",20)
-					.attr("dx", 5)
+  //draw chart
+  var chartHG = svg.append("g")
+          .selectAll("rect")
+          .data(dataHG)
+          .enter()
+          .append("rect")
+          .attr("x", 230)
+          .attr("y", function(d,i){
+            return 80 + 30 + i*(barHeight+2)
+          })
+          .attr("width",0)
+          .attr("fill", "white")
+          .transition()
+          .duration(1000)
+          .attr("width",function(d,i){
+            return 3*d
+          })
+          .attr("height", barHeight)
+          .attr("fill",function(d,i){
+            return color[i]
+          })
+    var textHG = svg.append("g")
+          .selectAll("text")
+          .data(dataHG)
+          .enter()
+          .append("text")
+          .attr("x", function(d,i){
+            return (230 + 3*d)
+          })
+          .attr("y", function(d,i){
+            return 80 + 30 + i*(barHeight+2)
+          })
+          .attr("fill", "white")
+          .transition()
+          .delay(800)
+          .text(function(d){
+            return d +"%";
+          })
+          .attr("fill",function(d,i){
+            return color[i]
+          })
+          .attr("text-anchor","start")
+          .attr("dy",20)
+          .attr("dx", 5)
+  //draw chart2
+  var chartFHG = svg.append("g")
+          .selectAll("rect")
+          .data(dataFHG)
+          .enter()
+          .append("rect")
+          .attr("x", 230)
+          .attr("y", function(d,i){
+            return 330 + 30 + i*(barHeight+2)
+          })
+          .attr("width",0)
+          .attr("fill", "white")
+          .transition()
+          .duration(1000)
+          .attr("width",function(d,i){
+            return 3*d
+          })
+          .attr("height", barHeight)
+          .attr("fill",function(d,i){
+            return color[i]
+          })
+    var textFHG = svg.append("g")
+          .selectAll("text")
+          .data(dataFHG)
+          .enter()
+          .append("text")
+          .attr("x", function(d,i){
+            return (230 + 3*d)
+          })
+          .attr("y", function(d,i){
+            return 330 + 30 + i*(barHeight+2)
+          })
+          .attr("fill", "white")
+          .transition()
+          .delay(800)
+          .text(function(d){
+            return d +"%";
+          })
+          .attr("fill",function(d,i){
+            return color[i]
+          })
+          .attr("text-anchor","start")
+          .attr("dy",20)
+          .attr("dx", 5)
 
 // draw legend
-	var legendCircle = svg.append("g")
-					.selectAll("circle")
-					.data(position)
-					.enter()
-					.append("circle")
-					.attr("r", 8)
-					.attr("cx", function(d,i){
-						return d[0]
-					})
-					.attr("cy", function(d,i){
-						return d[1]
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-	var legendText = svg.append("g")
-					.selectAll("text")
-					.data(position)
-					.enter()
-					.append("text")
-					.attr("x", function(d,i){
-						return d[0]+10;
-					})
-					.attr("y", function(d,i){
-						return d[1]+5;
-					})
-					.attr("fill", function(d,i){
-						return color[i];
-					})
-					.text(function(d,i){
-						return legend[i];
-					});
+  var legendCircle = svg.append("g")
+          .selectAll("circle")
+          .data(position)
+          .enter()
+          .append("circle")
+          .attr("r", 8)
+          .attr("cx", function(d,i){
+            return d[0]
+          })
+          .attr("cy", function(d,i){
+            return d[1]
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+  var legendText = svg.append("g")
+          .selectAll("text")
+          .data(position)
+          .enter()
+          .append("text")
+          .attr("x", function(d,i){
+            return d[0]+10;
+          })
+          .attr("y", function(d,i){
+            return d[1]+5;
+          })
+          .attr("fill", function(d,i){
+            return color[i];
+          })
+          .text(function(d,i){
+            return legend[i];
+          });
 
-	var legendText1 = svg.append("g")
-						.append("text")
-						.text("海龟")
-						.attr("x",130)
-						.attr("y", 200)
-						.attr("font-size", 25)
-						.attr("text-anchor", "middle")
-	var legendText2 = svg.append("g")
-						.append("text")
-						.text("非海龟")
-						.attr("x",130)
-						.attr("y", 450)
-						.attr("font-size", 25)
-						.attr("text-anchor", "middle")
-	var line = svg.append("g")
-						.append("line")
-						.attr("x1", 230)
-						.attr("y1", 80)
-						.attr("x2", 230)
-						.attr("y2", 600)
-						.attr("stroke", "grey")
+  var legendText1 = svg.append("g")
+            .append("text")
+            .text("海龟")
+            .attr("x",130)
+            .attr("y", 200)
+            .attr("font-size", 25)
+            .attr("text-anchor", "middle")
+  var legendText2 = svg.append("g")
+            .append("text")
+            .text("非海龟")
+            .attr("x",130)
+            .attr("y", 450)
+            .attr("font-size", 25)
+            .attr("text-anchor", "middle")
+  var line = svg.append("g")
+            .append("line")
+            .attr("x1", 230)
+            .attr("y1", 80)
+            .attr("x2", 230)
+            .attr("y2", 600)
+            .attr("stroke", "grey")
 
-	
+  
 </script>
 
 </div>
-</body>
+    
+    </script>
+  </body>
 </html>
-
-
-
-
-
